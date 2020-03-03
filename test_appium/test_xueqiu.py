@@ -20,14 +20,15 @@ class TestXueQiu():
         caps["appPackage"] = "com.xueqiu.android"
         caps["appActivity"] = ".view.WelcomeActivityAlias"
         caps["unicodeKeyboard"]=True
+        caps["noReset"] = True
         caps["chromedriverExecutable"] = "E:/PycharmProjects/HogwartsSED11/venv/chromedriver.exe"
 
         self.driver: WebDriver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
         self.driver.implicitly_wait(30)
-        try:
-            self.driver.find_element(By.XPATH, "//*[@text='同意']").click()
-        finally:
-            pass
+        # try:
+        #     self.driver.find_element(By.XPATH, "//*[@text='同意']").click()
+        # finally:
+        #     pass
 
     def test_search(self):
         # el5 = driver.find_element_by_id("com.xueqiu.android:id/tv_agree")
@@ -35,6 +36,7 @@ class TestXueQiu():
         self.driver.find_element_by_id("com.xueqiu.android:id/tv_search").click()
         self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").click()
         self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").send_keys("alibaba")
+
 
     def test_search_get_price(self):
         # 点击搜索
