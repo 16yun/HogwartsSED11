@@ -1,7 +1,13 @@
+import os
+import subprocess
+from time import sleep
+
+import yaml
 from appium.webdriver.webdriver import WebDriver
 import logging
 
 from selenium.webdriver.common.by import By
+
 
 
 
@@ -19,6 +25,8 @@ class BasePage:
 
     _error_max = 10
     _error_count = 0
+
+
 
     def __init__(self, driver: WebDriver = None):
         self._driver = driver
@@ -53,7 +61,7 @@ class BasePage:
 
 
                 elements = self._driver.find_elements(*element)
-                if len(elements) > 0:
+                if len(element) > 0:
                     elements[0].click()
 
                     return self.find(locator, value)
@@ -94,7 +102,6 @@ class BasePage:
 
                     return self.find_elements(locator, value)
 
-                raise e
             logging.warning("黑名单中未找到元素")
 
             raise e
@@ -108,6 +115,37 @@ class BasePage:
     def find_by_text(self,key):
         return self.find(self.text(key))
 
+
+    def get_devices_caps(self,devicesName):
+
+        path="E:\\PycharmProjects\\HogwartsSED11\\test_appium\\page\\caps.yaml"
+
+        with open(path,"r",encoding="utf-8") as f:
+
+            devices_caps: list[dict]  = yaml.safe_load(f)
+            for devices in devices_caps:
+                if devicesName in devices['desc']:
+                    logging.info(devices)
+                    udid=devices['desired_caps']['udid']
+                    caps=devices['desired_caps']
+                    port=devices['port']
+                    #todo 开启服务
+                    self.appium_start(port=port,udid=udid)
+                    return (caps,port)
+
+
+    def appium_start(self,port=4723,host='127.0.0.1',udid=None):
+
+        bootstrap_port=str(port+1)
+        cmd='appium -a ' +host+' -p '+str(port)+' --bootstrap-port '+bootstrap_port+' -U '+udid
+
+        subprocess.Popen(cmd,shell=True,stdout=open('./'+str(port)+'_log','a'),stderr=subprocess.STDOUT)
+
+
+    def kill_appium(self):
+
+        cmd_kill ='taskkill /f /t /im node.exe'
+        os.popen(cmd_kill)
 
 
     def find_click(self, locator):

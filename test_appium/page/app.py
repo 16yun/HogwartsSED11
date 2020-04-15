@@ -1,5 +1,7 @@
+import logging
 from time import sleep
 
+import yaml
 from appium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -22,14 +24,29 @@ class App(BasePage):
             caps["unicodeKeyboard"] = True
             # caps["noReset"] = True
             caps["chromedriverExecutable"] = "E:/PycharmProjects/HogwartsSED11/venv/chromedriver.exe"
-
-            self._driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
+            caps["udid"] = 'emulator-5556'
+            self._driver = webdriver.Remote("http://localhost:4725/wd/hub", caps)
             self._driver.implicitly_wait(5)
 
         else:
             self._driver.start_activity(self._package, self._activity)
 
         return self
+
+
+
+    def thread_start(self,devicesName):
+        if self._driver is None:
+            devices_caps,port =self.get_devices_caps(devicesName)
+            self._driver=webdriver.Remote('http://127.0.0.1:%s/wd/hub'%port,devices_caps)
+            self._driver.implicitly_wait(5)
+
+        else:
+            self._driver.start_activity(self._package, self._activity)
+
+        return self
+
+
 
     def main(self) -> MainPage:
 
@@ -44,3 +61,6 @@ class App(BasePage):
     def stop(self):
 
         self._driver.quit()
+
+
+

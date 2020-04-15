@@ -1,0 +1,33 @@
+
+- desc: emulator-5554 #设备名称
+  port: 4723
+  desired_caps:
+    platformName: Android
+    deviceName: emulator-5554
+    appPackage: com.xueqiu.android
+    appActivity: .view.WelcomeActivityAlia
+    unicodeKeyboard: True
+    chromedriverExecutable: E:/PycharmProjects/HogwartsSED11/venv/chromedriver.exe
+    udid: emulator-5554
+
+- desc: emulator-5556
+  port: 4725
+  desired_caps:
+    platformName: Android
+    deviceName: emulator-5556
+    appPackage: com.xueqiu.android
+    appActivity: .view.WelcomeActivityAlias
+    unicodeKeyboard: True
+    chromedriverExecutable: E:/PycharmProjects/HogwartsSED11/venv/chromedriver.exe
+    udid: emulator-5556
+
+- desc: emulator-5558
+  port: 4727
+  desired_caps:
+    platformName: Android
+    deviceName: emulator-5558
+    appPackage: com.xueqiu.android
+    appActivity: .view.WelcomeActivityAlias
+    unicodeKeyboard: True
+    chromedriverExecutable: E:/PycharmProjects/HogwartsSED11/venv/chromedriver.exe
+    udid: emulator-5558

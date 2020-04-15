@@ -3,7 +3,7 @@ from time import sleep
 from selenium.webdriver.common.by import By
 
 from test_appium.page.base_page import BasePage
-from test_appium.page.market import MarketPage
+
 from test_appium.page.search import SearchPage
 
 
